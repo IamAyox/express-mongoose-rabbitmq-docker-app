@@ -14,7 +14,8 @@ app.use(express.json());
 app.use(isAuthenticated);
 ProductConsumer();
 app.listen(PORT,()=>console.log(`product server listening on port ${PORT}`));
-app.post('/products',async (req,res)=>{
+
+app.post('/products',async (req,res,next)=>{
     let {name,description,price} = req.body;
     Product.create({name,description,price})
     .then(result=>res.json(result))
