@@ -1,0 +1,34 @@
+version: '3'
+services:
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3001
+    depends_on:
+      - mongodb
+
+  product-microservice:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    ports:
+      - 3003:3003
+    depends_on:
+      - mongodb
+
+  commande-service:
+    build:
+      context: ./commande-service
+      dockerfile: Dockerfile
+    ports:
+      - 3003:3003
+    depends_on:
+      - mongodb
+      - product-microservice
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
